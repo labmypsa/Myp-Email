@@ -1,0 +1,220 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Myp_Email.Class
+{   
+
+    public class Class_debug
+    {
+        Class.Class_email correo = new Class.Class_email();
+        Class.Class_ejecutar ejecutar = new Class.Class_ejecutar();
+        public Class_debug()
+        {
+            //
+        }
+
+        public DataTable _editar(DataTable dtequipo)
+        {         
+            dtequipo.Columns.Add("dias", typeof(int));
+            DataRow renglon;
+            renglon = dtequipo.NewRow();
+            int filas = dtequipo.Rows.Count;
+            for (int i = 0; i< filas;i++)
+            {                
+               DateTime fecha = Convert.ToDateTime(dtequipo.Rows[i]["fecha_inicio"]);
+               var dias= _diastrans(fecha);
+                dtequipo.Rows[i]["dias"] = dias;
+            }
+            return dtequipo;
+        }
+
+        private int _diastrans(DateTime fecha)
+        {
+            var dias = 0;
+            var diastrans = 0;
+            string fecha2 = fecha.ToString("dd/MM/yyyy");
+            //DateTime olddate = Convert.ToDateTime(fecha2);
+            DateTime olddate = DateTime.ParseExact(fecha2, "dd/MM/yyyy", null);
+            DateTime newdate = DateTime.Now;
+            var diashabiles = (newdate - olddate).TotalDays;
+            var finsemana = olddate.DayOfWeek - newdate.DayOfWeek;
+            double calcBusinessDays = ((diashabiles) * 5 - (finsemana) * 2) / 7;
+
+            if ((int)newdate.DayOfWeek == 6) calcBusinessDays--;
+            if ((int)olddate.DayOfWeek == 0) calcBusinessDays--;
+
+            diastrans = (int)calcBusinessDays;
+            if (diastrans < 1) // dias trancsurridos  menores que 3 se asignara 0 días
+            {
+                dias = 0;
+            }
+            else
+            {
+                dias = diastrans;
+            }
+            return dias;
+        }
+
+        public void _tecnico(DataTable dtequipo)
+        {
+            DataTable dt_tecnico = new DataTable();
+            dt_tecnico.Columns.Add("id", typeof(string));
+            dt_tecnico.Columns.Add("id_equipo", typeof(string));
+            dt_tecnico.Columns.Add("descripcion", typeof(string));
+            dt_tecnico.Columns.Add("marca", typeof(string));
+            dt_tecnico.Columns.Add("modelo", typeof(string));
+            dt_tecnico.Columns.Add("serie", typeof(string));
+            dt_tecnico.Columns.Add("cliente", typeof(string));
+            dt_tecnico.Columns.Add("direccion", typeof(string));
+            dt_tecnico.Columns.Add("id_tecnico", typeof(string));
+            dt_tecnico.Columns.Add("fecha_inicio", typeof(string));
+            dt_tecnico.Columns.Add("dias", typeof(string));
+            DataRow row;
+
+            //int filas = dtequipo.Rows.Count;
+            int i;
+            string nom_tecnico = "";           
+            for (i = 0; i < dtequipo.Rows.Count; i++)
+            {
+                var id_tecnico= int.Parse(dtequipo.Rows[i]["id_tecnico"].ToString());
+                if (i == 0) // 
+                {
+                    nom_tecnico = dtequipo.Rows[i]["tecnico"].ToString();                   
+                    row = dt_tecnico.NewRow();
+                    row["id"] = dtequipo.Rows[i]["id"];
+                    row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
+                    row["descripcion"] = dtequipo.Rows[i]["descripcion"];
+                    row["marca"] = dtequipo.Rows[i]["marca"];
+                    row["modelo"] = dtequipo.Rows[i]["modelo"];
+                    row["serie"] = dtequipo.Rows[i]["serie"];
+                    row["cliente"] = dtequipo.Rows[i]["cliente"];
+                    row["direccion"] = dtequipo.Rows[i]["direccion"];
+                    row["id_tecnico"] = dtequipo.Rows[i]["id_tecnico"];
+                    row["fecha_inicio"] = dtequipo.Rows[i]["fecha_inicio"];
+                    row["dias"] = dtequipo.Rows[i]["dias"];
+                    dt_tecnico.Rows.Add(row);
+
+                }
+                else {
+                    var id_tecnicotemp = int.Parse(dt_tecnico.Rows[0]["id_tecnico"].ToString());
+                    if (id_tecnico == id_tecnicotemp) //i > 0
+                    {
+                        row = dt_tecnico.NewRow();
+                        row["id"] = dtequipo.Rows[i]["id"];
+                        row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
+                        row["descripcion"] = dtequipo.Rows[i]["descripcion"];
+                        row["marca"] = dtequipo.Rows[i]["marca"];
+                        row["modelo"] = dtequipo.Rows[i]["modelo"];
+                        row["serie"] = dtequipo.Rows[i]["serie"];
+                        row["cliente"] = dtequipo.Rows[i]["cliente"];
+                        row["direccion"] = dtequipo.Rows[i]["direccion"];
+                        row["id_tecnico"] = dtequipo.Rows[i]["id_tecnico"];
+                        row["fecha_inicio"] = dtequipo.Rows[i]["fecha_inicio"];
+                        row["dias"] = dtequipo.Rows[i]["dias"];
+                        dt_tecnico.Rows.Add(row);
+                    }
+                    else
+                    {
+                        for (int j = (i-1); j >= 0; j--)
+                        {
+                            DataRow rowd= dtequipo.Rows[j];
+                            dtequipo.Rows.Remove(rowd);
+                        }
+                        var id_usuario = int.Parse(dt_tecnico.Rows[0]["id_tecnico"].ToString()); //Obtenemos el id del tecnico
+                        DataTable temp = new DataTable();
+                        temp = ejecutar._select("correo_tec",id_usuario.ToString()); // Select el correo del tecnico
+                        var correo_tec = temp.Rows[0]["email"].ToString();
+                        correo._enviar(dt_tecnico, nom_tecnico, correo_tec);
+                        dt_tecnico.Clear();
+                        i = -1;
+                    }
+
+                }
+            }          
+        }
+
+        public void _clientes(DataTable dtequipo)
+        {
+            DataTable dt_cliente = new DataTable();            
+            dt_cliente.Columns.Add("id_equipo", typeof(string));
+            dt_cliente.Columns.Add("descripcion", typeof(string));
+            dt_cliente.Columns.Add("marca", typeof(string));
+            dt_cliente.Columns.Add("modelo", typeof(string));
+            dt_cliente.Columns.Add("serie", typeof(string));                    
+            //dt_cliente.Columns.Add("fecha_venc", typeof(string));
+            dt_cliente.Columns.Add("id_cliente", typeof(string));
+            DataRow row;
+
+            //int filas = dtequipo.Rows.Count;
+            int i;
+            string nom_cliente = "", dir_cliente="", rfc_cliente="";
+            for (i = 0; i < dtequipo.Rows.Count; i++)
+            {
+                var id_cliente = int.Parse(dtequipo.Rows[i]["id_cliente"].ToString());
+                if (i == 0) // 
+                {
+                    nom_cliente = dtequipo.Rows[i]["cliente"].ToString();
+                    dir_cliente = dtequipo.Rows[i]["direccion"].ToString();
+                    rfc_cliente = dtequipo.Rows[i]["rfc"].ToString();
+                    row = dt_cliente.NewRow();                   
+                    row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
+                    row["descripcion"] = dtequipo.Rows[i]["descripcion"];
+                    row["marca"] = dtequipo.Rows[i]["marca"];
+                    row["modelo"] = dtequipo.Rows[i]["modelo"];
+                    row["serie"] = dtequipo.Rows[i]["serie"];                   
+                    //row["fecha_venc"] = dtequipo.Rows[i]["fecha_vencimiento"];
+                    row["id_cliente"] = dtequipo.Rows[i]["id_cliente"];
+                    dt_cliente.Rows.Add(row);
+
+                }
+                else
+                {
+                    var id_clientetemp = int.Parse(dt_cliente.Rows[0]["id_cliente"].ToString());
+                    if (id_cliente == id_clientetemp) //i > 0
+                    {
+                        row = dt_cliente.NewRow();                       
+                        row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
+                        row["descripcion"] = dtequipo.Rows[i]["descripcion"];
+                        row["marca"] = dtequipo.Rows[i]["marca"];
+                        row["modelo"] = dtequipo.Rows[i]["modelo"];
+                        row["serie"] = dtequipo.Rows[i]["serie"];
+                        //row["fecha_venc"] = dtequipo.Rows[i]["fecha_vencimiento"];
+                        row["id_cliente"] = dtequipo.Rows[i]["id_cliente"];
+                        dt_cliente.Rows.Add(row);
+                    }
+                    else
+                    {
+                        for (int j = (i - 1); j >= 0; j--)
+                        {
+                            DataRow rowd = dtequipo.Rows[j];
+                            dtequipo.Rows.Remove(rowd);
+                        }
+                        var cliente = int.Parse(dt_cliente.Rows[0]["id_cliente"].ToString()); //Obtenemos el id del tecnico
+                        DataTable temp = new DataTable();
+                        temp = ejecutar._select("correo_cliente", cliente.ToString()); // Select el correo del tecnico
+                        string contactos = "";
+                        foreach (DataRow fila in temp.Rows)
+                        {
+                            contactos += fila["email"].ToString() +", ";
+                        }
+                        string lista_email="";
+                        if (contactos.Length > 0) { lista_email= contactos.Substring(0, (contactos.Length) - 2); }                        
+
+                        string html=correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, lista_email);
+                       correo._enviar(dt_cliente, "cliente", lista_email, html);
+                        dt_cliente.Clear();
+                        i = -1;
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    
+}

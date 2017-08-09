@@ -1,0 +1,11 @@
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.csprojResolveAssemblyReference.cache
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Img.resources
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Properties.Resources.resources
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.csproj.GenerateResource.Cache
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe.config
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.pdb
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\MySql.Data.dll
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.exe
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.pdb
+c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form1.resources
