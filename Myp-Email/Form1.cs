@@ -36,15 +36,15 @@ namespace Myp_Email
             timer_checador.Start();
             check_n.Checked = true;
             check_h.Checked = true;
-            check_g.Checked = true;
+            check_g.Checked = false;
             MaximizeBox = false;
         }
 
         private void _procesos(string proceso = "", string desc = "")
         {
-            bool[] Arrcheck = { check_n.Checked, check_h.Checked, check_g.Checked };            
+            bool[] Arrcheck = { check_n.Checked, check_h.Checked, check_g.Checked };
             for (int i = 0; i < 3; i++)
-            {            
+            {
                 dt.Clear();
                 if (Arrcheck[i] == true)
                 {
@@ -56,7 +56,7 @@ namespace Myp_Email
                             dt = depurar._editar(ejecutar._select("calib", ArrSucur[i]));
                             depurar._tecnico(dt);
                             _consola("Operación terminada exitosamente. Proceso : Calibración por técnico , Sucursal: " + ArrSucur[i]);
-                            ejecutar._add("logs","'calibración Técnico', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i]+"','"+ DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
+                            ejecutar._add("logs", "'calibración Técnico', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
                         catch (Exception)
                         {
@@ -72,7 +72,7 @@ namespace Myp_Email
                             dt = ejecutar._select(proceso, ArrSucur[i]);
                             depurar._clientes(dt);
                             _consola("Operación terminada exitosamente. Proceso : Recordatorios para Clientes, Sucursal: " + ArrSucur[i]);
-                            ejecutar._add("logs", "'clientes', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");                         
+                            ejecutar._add("logs", "'clientes', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
                         catch (Exception)
                         {
@@ -88,12 +88,12 @@ namespace Myp_Email
                             dt = depurar._editar(ejecutar._select(proceso, ArrSucur[i]));
                             correo._enviar(dt, desc, lista_email[i]);
                             _consola("Operación terminada exitosamente. Proceso : " + proceso + ", Sucursal: " + ArrSucur[i]);
-                            ejecutar._add("logs", "'" + proceso + "', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");                         
+                            ejecutar._add("logs", "'" + proceso + "', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
                         catch (Exception)
                         {
                             _consola("Operación  Fallida. Proceso : " + proceso + ", Sucursal: " + ArrSucur[i]);
-                            ejecutar._add("logs", "'"+ proceso + "', 'Operación Fallida. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");                     
+                            ejecutar._add("logs", "'" + proceso + "', 'Operación Fallida. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
 
                     }
@@ -211,5 +211,33 @@ namespace Myp_Email
             }
         }
 
+        private void calibracionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 View2 = new Form2();
+            View2._gridview("correo_calibracion");
+            View2.Show();
+
+        }
+
+        private void salidaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form2 View2 = new Form2();
+            View2._gridview("correo_salida");
+            View2.Show();
+        }
+
+        private void facturaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 View2 = new Form2();
+            View2._gridview("correo_facturacion");
+            View2.Show();
+        }
+
+        private void cotizaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 View2 = new Form2();
+            View2._gridview("correo_cotizacion");
+            View2.Show();
+        }
     }
 }

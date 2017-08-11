@@ -18,12 +18,12 @@ namespace Myp_Email.Class
             //
         }
 
-        public DataTable _ejecutar(string query="")
+        public DataTable _ejecutar(string query="",string tabla="")
         {
             dtequipos.Clear();
             Class_conexion class_cnx = new Class_conexion();
             
-            MySqlConnection cnx = new MySqlConnection(class_cnx._conexion());
+            MySqlConnection cnx = new MySqlConnection(class_cnx._conexion(tabla));
             cnx.Open();
             MySqlCommand cmd = new MySqlCommand(query,cnx);
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
@@ -95,13 +95,12 @@ namespace Myp_Email.Class
         public string _add(string tabla = "", string values = "")
         {
             try
-            {
-                string consulta = "";
+            {                
                 string celdas = "";
                 if (tabla == "logs") { celdas = "accion,detalle,fecha"; }
                 else { celdas = "nombre,correo,id_sucursal"; }
 
-                consulta = "insert into " + tabla + "("+ celdas + ") VALUES (" + values +");";                                
+                string consulta = "insert into " + tabla + "("+ celdas + ") VALUES (" + values +");";                                
                 _insert(consulta);
                 return  "";
             }
@@ -113,22 +112,30 @@ namespace Myp_Email.Class
 
         public string _update(string tabla = "", string values = "")
         {
-            //try
-            //{
-            //    string consulta = String.Format("insert into logs (accion,detalle,fecha) value ('{0}','{1}','{2}')", accion, detalle, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"));
-            //    _insert(consulta);
-            //    return "";
-            //}
-            //catch (Exception ex)
-            //{
-            //    return ex.ToString();
-            //}
-            return "";
+            try
+            {
+                string consulta = " UPDATE " + tabla + " SET " + values;
+                _insert(consulta);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
 
         public string _delete(string tabla = "", string values = "")
         {
-            return "";
+            try
+            {
+                string consulta = " DELETE FROM "+ tabla +" WHERE " + values;
+                _insert(consulta);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
 
 
@@ -136,7 +143,6 @@ namespace Myp_Email.Class
         {
             
             Class_conexion class_cnx = new Class_conexion();
-
             MySqlConnection cnx = new MySqlConnection(class_cnx._conexion("2"));
             cnx.Open();
             MySqlCommand cmd = new MySqlCommand(query, cnx);

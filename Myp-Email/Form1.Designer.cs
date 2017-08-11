@@ -38,23 +38,23 @@
             this.facturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibracióntécnicoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Fecha = new System.Windows.Forms.Label();
-            this.reloj = new System.Windows.Forms.Label();
-            this.timer_reloj = new System.Windows.Forms.Timer(this.components);
-            this.timer_checador = new System.Windows.Forms.Timer(this.components);
-            this.panel_radio = new System.Windows.Forms.Panel();
-            this.check_g = new System.Windows.Forms.CheckBox();
-            this.check_h = new System.Windows.Forms.CheckBox();
-            this.check_n = new System.Windows.Forms.CheckBox();
-            this.consola = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.modulosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calibracionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salidaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.facturaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cotizaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fecha = new System.Windows.Forms.Label();
+            this.reloj = new System.Windows.Forms.Label();
+            this.timer_reloj = new System.Windows.Forms.Timer(this.components);
+            this.timer_checador = new System.Windows.Forms.Timer(this.components);
+            this.panel_radio = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.check_g = new System.Windows.Forms.CheckBox();
+            this.check_h = new System.Windows.Forms.CheckBox();
+            this.check_n = new System.Windows.Forms.CheckBox();
+            this.consola = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.panel_radio.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -88,7 +88,7 @@
             this.facturaToolStripMenuItem,
             this.calibracióntécnicoToolStripMenuItem});
             this.internosToolStripMenuItem.Name = "internosToolStripMenuItem";
-            this.internosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.internosToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.internosToolStripMenuItem.Text = "Internos";
             // 
             // calibraciónToolStripMenuItem
@@ -122,9 +122,55 @@
             // clientesToolStripMenuItem
             // 
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.clientesToolStripMenuItem.Text = "Clientes";
             this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
+            // 
+            // modulosToolStripMenuItem
+            // 
+            this.modulosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.calibracionToolStripMenuItem,
+            this.salidaToolStripMenuItem1,
+            this.facturaciónToolStripMenuItem,
+            this.cotizaciónToolStripMenuItem,
+            this.logsToolStripMenuItem});
+            this.modulosToolStripMenuItem.Name = "modulosToolStripMenuItem";
+            this.modulosToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.modulosToolStripMenuItem.Text = "Modulos";
+            // 
+            // calibracionToolStripMenuItem
+            // 
+            this.calibracionToolStripMenuItem.Name = "calibracionToolStripMenuItem";
+            this.calibracionToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.calibracionToolStripMenuItem.Text = "Correo_Calibración";
+            this.calibracionToolStripMenuItem.Click += new System.EventHandler(this.calibracionToolStripMenuItem_Click);
+            // 
+            // salidaToolStripMenuItem1
+            // 
+            this.salidaToolStripMenuItem1.Name = "salidaToolStripMenuItem1";
+            this.salidaToolStripMenuItem1.Size = new System.Drawing.Size(177, 22);
+            this.salidaToolStripMenuItem1.Text = "Correo_Salida";
+            this.salidaToolStripMenuItem1.Click += new System.EventHandler(this.salidaToolStripMenuItem1_Click);
+            // 
+            // facturaciónToolStripMenuItem
+            // 
+            this.facturaciónToolStripMenuItem.Name = "facturaciónToolStripMenuItem";
+            this.facturaciónToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.facturaciónToolStripMenuItem.Text = "Correo_Facturación";
+            this.facturaciónToolStripMenuItem.Click += new System.EventHandler(this.facturaciónToolStripMenuItem_Click);
+            // 
+            // cotizaciónToolStripMenuItem
+            // 
+            this.cotizaciónToolStripMenuItem.Name = "cotizaciónToolStripMenuItem";
+            this.cotizaciónToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.cotizaciónToolStripMenuItem.Text = "Correo_Cotización";
+            this.cotizaciónToolStripMenuItem.Click += new System.EventHandler(this.cotizaciónToolStripMenuItem_Click);
+            // 
+            // logsToolStripMenuItem
+            // 
+            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
+            this.logsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.logsToolStripMenuItem.Text = "Logs";
             // 
             // Fecha
             // 
@@ -168,6 +214,16 @@
             this.panel_radio.Name = "panel_radio";
             this.panel_radio.Size = new System.Drawing.Size(374, 61);
             this.panel_radio.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(-1, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(370, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Seleccionar las sucursales que desea que reciban recordatorios";
             // 
             // check_g
             // 
@@ -214,16 +270,6 @@
             this.consola.TabIndex = 3;
             this.consola.Text = ">";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(-1, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(370, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Seleccionar las sucursales que desea que reciban recordatorios";
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -234,48 +280,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(119, 61);
             this.panel1.TabIndex = 4;
-            // 
-            // modulosToolStripMenuItem
-            // 
-            this.modulosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.calibracionToolStripMenuItem,
-            this.salidaToolStripMenuItem1,
-            this.facturaciónToolStripMenuItem,
-            this.cotizaciónToolStripMenuItem,
-            this.logsToolStripMenuItem});
-            this.modulosToolStripMenuItem.Name = "modulosToolStripMenuItem";
-            this.modulosToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.modulosToolStripMenuItem.Text = "Modulos";
-            // 
-            // calibracionToolStripMenuItem
-            // 
-            this.calibracionToolStripMenuItem.Name = "calibracionToolStripMenuItem";
-            this.calibracionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.calibracionToolStripMenuItem.Text = "Calibración";
-            // 
-            // salidaToolStripMenuItem1
-            // 
-            this.salidaToolStripMenuItem1.Name = "salidaToolStripMenuItem1";
-            this.salidaToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.salidaToolStripMenuItem1.Text = "Salida";
-            // 
-            // facturaciónToolStripMenuItem
-            // 
-            this.facturaciónToolStripMenuItem.Name = "facturaciónToolStripMenuItem";
-            this.facturaciónToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.facturaciónToolStripMenuItem.Text = "Facturación";
-            // 
-            // cotizaciónToolStripMenuItem
-            // 
-            this.cotizaciónToolStripMenuItem.Name = "cotizaciónToolStripMenuItem";
-            this.cotizaciónToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cotizaciónToolStripMenuItem.Text = "Cotización";
-            // 
-            // logsToolStripMenuItem
-            // 
-            this.logsToolStripMenuItem.Name = "logsToolStripMenuItem";
-            this.logsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.logsToolStripMenuItem.Text = "Logs";
             // 
             // Form1
             // 
