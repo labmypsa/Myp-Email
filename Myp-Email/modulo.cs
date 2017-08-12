@@ -13,6 +13,7 @@ namespace Myp_Email
     public partial class Form2 : Form
     {
         Class.Class_ejecutar ejecutar = new Class.Class_ejecutar();
+
         int id_contacto = 0;
         public Form2(string tipo = "")
         {
@@ -30,7 +31,7 @@ namespace Myp_Email
 
             DataTable dt = new DataTable();
             DataTable dt_copy = new DataTable(); //Copia el contenido, porque cuando combobox entra a pedir otra vez al metodo se genera otro datatable. y el gridview esta alimentado con el datatable directamente
-            dt = ejecutar._ejecutar("select id,nombre as Nombre,correo as Correo,sucursal as Planta,id_sucursal from view_" + this.Text + ";", "2");
+            dt = ejecutar._ejecutar("select id,nombre as Nombre,email,sucursal as Planta,id_sucursal from view_" + this.Text + ";", "2");
             dt_copy = dt.Copy();
             tabla.DataSource = dt_copy;
             tabla.Columns[0].Visible = false;

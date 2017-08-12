@@ -13,7 +13,8 @@ using System.Data;
 namespace Myp_Email.Class
 {
     public class Class_email
-    {
+    {              
+
         public Class_email()
         {
 
@@ -113,8 +114,13 @@ namespace Myp_Email.Class
             return contenido;
         }
 
-        public string _infocliente(string cliente = "", string dir = "", string rfc = "", string correo = "",string suc="")
-        {          
+        public string _infocliente(string cliente = "", string dir = "", string rfc = "", string correo = "",string nombre="", string contacto="" )
+        {
+           
+
+            if (String.IsNullOrEmpty(rfc) == true) {
+                rfc = "Sin RFC";
+            }
 
             string contenido = "";
             contenido = "<hr> <table>" +
@@ -129,10 +135,10 @@ namespace Myp_Email.Class
                         "<p> <strong> RFC:</strong> " + rfc + "</p>" +
                         "<p> <strong> Contacto(s):</strong> " + correo + "</p>" +
                     "</td>" +
-                        "<td class=\"cuadro\"><p> <strong>Contacto:</strong> </p>" +
+                        "<td class=\"cuadro\"><p> <strong>Contacto: "+ nombre + "</strong> </p>" +
                         "<p> <strong>Fecha:</strong> " + DateTime.Now + "</p>" +
                         "<p> <strong>Asunto:</strong> Recordatorio " + _mes(DateTime.Now) + " </p>" +
-                        "<p> <strong>Nota:</strong> Este correo se envía de manera automática, favor de responder a la dirección de correo siguiente: <br> <a>  </a> </p>" +
+                        "<p> <strong>Nota:</strong> Este correo se envía de manera automática, favor de responder a la dirección de correo siguiente: <br> <a>"+ contacto + " </a> </p>" +
                     "</td>" +
                    "</tr>" +
                    "</table> <br>";
@@ -146,7 +152,7 @@ namespace Myp_Email.Class
             var email = "laboratoriomypsa@gmail.com";
             //Desde (correo electronico del que enviamos)
             oMsg.From = new MailAddress(email, "Mypsa.com.mx");
-            oMsg.To.Add(correo);              
+            //oMsg.To.Add(correo);              
             oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));
 
             var subject = "Recordatorio de calibración";
