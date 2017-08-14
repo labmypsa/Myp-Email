@@ -55,7 +55,7 @@ namespace Myp_Email
                         try
                         {
                             DataTable dt_copy = new DataTable();
-                            dt = her_depurar_ejecutar._editar(her_depurar_ejecutar._select("calib", ArrSucur[i]));                            
+                            dt = her_depurar_ejecutar._editar(her_depurar_ejecutar._select("calibracion", ArrSucur[i]));                            
                             dt_copy = dt.Copy();
                             her_depurar_ejecutar._tecnico(dt_copy);
                             _consola("Operación terminada exitosamente. Proceso : Calibración por técnico , Sucursal: " + ArrSucur[i]);
@@ -249,6 +249,10 @@ namespace Myp_Email
             View2.Show();
         }
 
-
+        private void logsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form3 View3 = new Form3();
+            View3.Show();
+        }
     }
 }
