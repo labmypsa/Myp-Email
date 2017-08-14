@@ -41,14 +41,14 @@
             this.dataGridView_logs.Location = new System.Drawing.Point(0, 0);
             this.dataGridView_logs.Name = "dataGridView_logs";
             this.dataGridView_logs.ReadOnly = true;
-            this.dataGridView_logs.Size = new System.Drawing.Size(720, 474);
+            this.dataGridView_logs.Size = new System.Drawing.Size(559, 474);
             this.dataGridView_logs.TabIndex = 0;
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 474);
+            this.ClientSize = new System.Drawing.Size(559, 474);
             this.Controls.Add(this.dataGridView_logs);
             this.Name = "Form3";
             this.Text = "Reporte Logs";

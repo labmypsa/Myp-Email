@@ -17,7 +17,8 @@ namespace Myp_Email
         public Form3()
         {
             InitializeComponent();
-
+            this.MaximizeBox = false;
+            _gridview();           
         }
 
         public void _gridview()
@@ -27,7 +28,10 @@ namespace Myp_Email
             dt = ejecutar._ejecutar("select * from logs order by id desc;", "2");
             dt_copy = dt.Copy();
             dataGridView_logs.DataSource = dt_copy;
-            dataGridView_logs.Columns[0].Visible = false;                       
+            dataGridView_logs.Columns[0].Visible = false;
+            dataGridView_logs.Columns[1].Width = 80;
+            dataGridView_logs.Columns[2].Width = 280;
+            dataGridView_logs.Columns[3].Width = 130;
         }
     }
 }
