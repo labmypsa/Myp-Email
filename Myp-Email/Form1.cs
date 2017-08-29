@@ -24,15 +24,16 @@ namespace Myp_Email
         //    "hmofacturacion@mypsa.com.mx, lromero@mypsa.com.mx, svazquez@mypsa.mx, blanca.bernal@mypsa.mx",
         //    "edit.bray@mypsa.com.mx"
         //};
-        string horainicial = "07:55:05";
+        string horainicial = "07:55:00";
         string[] ArrSucur = { "n", "h", "g" };
         int count_consola = 0;
+        string horainicial2 = "07:35";
 
         public Form1()
         {
             InitializeComponent();
             timer_reloj.Start();
-            timer_checador.Interval = (1000 * 60) * 60; // cada  hora
+            timer_checador.Interval = (1000 * 60); // cada  minuto
             timer_checador.Start();
             check_n.Checked = true;
             check_h.Checked = true;
@@ -160,18 +161,18 @@ namespace Myp_Email
                 }
             }
 
-            var Hora = DateTime.Now.ToString("hh:mm:ss");
+            var Hora = DateTime.Now.ToString("HH:mm:ss");
             if (Hora == horainicial) //Envia recordatorios programado
             {
                 DateTime today = DateTime.Today;
                 if (today.DayOfWeek != DayOfWeek.Saturday && today.DayOfWeek != DayOfWeek.Sunday)
                 {
-                    _procesos("calib", "Calibración");
-                    Thread.Sleep(1000);
+                    _procesos("calibracion", "Calibración");
+                    Thread.Sleep(10000);
                     _procesos("salida", "Salida");
-                    Thread.Sleep(1000);
-                    _procesos("factura", "Facturación");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(10000);
+                    _procesos("facturacion", "Facturación");
+                    Thread.Sleep(10000);
                     _procesos("calib_tec");
                 }
 
@@ -187,8 +188,8 @@ namespace Myp_Email
             { diaultimomes = new DateTime(hoy.Year, hoy.Month + 1, 1).AddDays(-1); }
             else
             { diaultimomes = new DateTime(hoy.Year + 1, 1, 1).AddDays(-1); }
-
-            if (hoy.ToString("dd-MMM-yyyy") == diaultimomes.ToString("dd-MMM-yyyy"))
+            var Hora = DateTime.Now.ToString("HH:mm");
+            if ((hoy.ToString("dd-MMM-yyyy") == diaultimomes.ToString("dd-MMM-yyyy")) && (Hora == horainicial2))
             {
                 _procesos("clientes");
             }
