@@ -24,7 +24,7 @@ namespace Myp_Email
         //    "hmofacturacion@mypsa.com.mx, lromero@mypsa.com.mx, svazquez@mypsa.mx, blanca.bernal@mypsa.mx",
         //    "edit.bray@mypsa.com.mx"
         //};
-        string horainicial = "07:55:00";
+        string horainicial = "08:15:00";
         string[] ArrSucur = { "n", "h", "g" };
         int count_consola = 0;
         string horainicial2 = "07:35";

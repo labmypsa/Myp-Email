@@ -12,6 +12,8 @@ namespace Myp_Email.Class
     {
         Class.Class_email correo = new Class.Class_email();
 
+        string nom_cliente = "", dir_cliente = "", rfc_cliente = "", nombre = "", contacto = "";
+
         public Class_debug()
         {
             //
@@ -150,8 +152,7 @@ namespace Myp_Email.Class
             DataRow row;
            
             //int filas = dtequipo.Rows.Count;
-            int i;
-            string nom_cliente = "", dir_cliente = "", rfc_cliente = "", nombre="", contacto="";
+            int i;            
             DataTable dt_email = new DataTable();
             dt_email = _ejecutar(_querys("correo_cotizacion", suc.ToString()), "2"); //obtengo el query, deespues el dt
             nombre = dt_email.Rows[0]["nombre"].ToString();
@@ -200,8 +201,18 @@ namespace Myp_Email.Class
                         DataTable temp = new DataTable();
                         temp = _select("correo_cliente", cliente.ToString()); // Select el correo del tecnico
                         string lista_email = _listaemails(temp);
+                        var email_cliente="";
+                        if (String.IsNullOrEmpty(lista_email))
+                        {
+                            email_cliente = "Sin identificación";
+                            lista_email = contacto;
+                        }
+                        else {
+                            email_cliente = lista_email;                           
+                        }
 
-                        string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, lista_email, nombre,contacto);
+
+                        string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, email_cliente, nombre,contacto);
 
                         correo._enviar(dt_cliente, "cliente", lista_email, html);
                         dt_cliente.Clear();
@@ -219,7 +230,7 @@ namespace Myp_Email.Class
             {
                 contactos += fila["email"].ToString() + ", ";
             }
-            if (contactos.Length > 0) { contactos = contactos.Substring(0, (contactos.Length) - 2); }
+            if (contactos.Length > 0) { contactos = contactos.Substring(0, (contactos.Length) - 2); }            
             return contactos;
         }
     }

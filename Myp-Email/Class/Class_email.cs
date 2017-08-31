@@ -152,7 +152,10 @@ namespace Myp_Email.Class
             var email = "laboratoriomypsa@gmail.com";
             //Desde (correo electronico del que enviamos)
             oMsg.From = new MailAddress(email, "Mypsa.com.mx");
-            oMsg.To.Add(correo);              
+            if (!String.IsNullOrEmpty(correo))
+            {
+                oMsg.To.Add(correo);
+            }          
             oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));
 
             var subject = "Recordatorio de calibración";
