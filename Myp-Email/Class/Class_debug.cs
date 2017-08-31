@@ -82,6 +82,7 @@ namespace Myp_Email.Class
             string nom_tecnico = "";
             for (i = 0; i < dtequipo.Rows.Count; i++)
             {
+                var igual = 0;
                 var id_tecnico = int.Parse(dtequipo.Rows[i]["id_tecnico"].ToString());
                 if (i == 0) // 
                 {
@@ -136,6 +137,21 @@ namespace Myp_Email.Class
                         i = -1;
                     }
 
+                }
+                igual = i + 1;
+                if (dtequipo.Rows.Count == igual) {
+                    for (int j = i; j >= 0; j--)
+                    {
+                        DataRow rowd = dtequipo.Rows[j];
+                        dtequipo.Rows.Remove(rowd);
+                    }
+                    var id_usuario = int.Parse(dt_tecnico.Rows[0]["id_tecnico"].ToString()); //Obtenemos el id del tecnico
+                    DataTable temp = new DataTable();
+                    temp = _select("correo_tec", id_usuario.ToString()); // Select el correo del tecnico
+                    var correo_tec = temp.Rows[0]["email"].ToString();
+                    correo._enviar(dt_tecnico, nom_tecnico, correo_tec);
+                    dt_tecnico.Clear();
+                    i = -1;
                 }
             }
         }
