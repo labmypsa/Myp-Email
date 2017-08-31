@@ -148,6 +148,7 @@ namespace Myp_Email.Class
             dt_cliente.Columns.Add("marca", typeof(string));
             dt_cliente.Columns.Add("modelo", typeof(string));
             dt_cliente.Columns.Add("serie", typeof(string));
+            dt_cliente.Columns.Add("fecha_vencimiento", typeof(string));
             dt_cliente.Columns.Add("id_cliente", typeof(string));
             DataRow row;
            
@@ -160,7 +161,8 @@ namespace Myp_Email.Class
 
             for (i = 0; i < dtequipo.Rows.Count; i++)
             {
-                var id_cliente = int.Parse(dtequipo.Rows[i]["id_cliente"].ToString());
+                var igual = 0;
+              var id_cliente = int.Parse(dtequipo.Rows[i]["id_cliente"].ToString());
                 if (i == 0) // 
                 {
                     nom_cliente = dtequipo.Rows[i]["cliente"].ToString();
@@ -172,14 +174,14 @@ namespace Myp_Email.Class
                     row["marca"] = dtequipo.Rows[i]["marca"];
                     row["modelo"] = dtequipo.Rows[i]["modelo"];
                     row["serie"] = dtequipo.Rows[i]["serie"];
+                    row["fecha_vencimiento"] = dtequipo.Rows[i]["fecha_vencimiento"];
                     row["id_cliente"] = dtequipo.Rows[i]["id_cliente"];
                     dt_cliente.Rows.Add(row);
-
                 }
                 else
                 {
                     var id_clientetemp = int.Parse(dt_cliente.Rows[0]["id_cliente"].ToString());
-                    if (id_cliente == id_clientetemp) //i > 0
+                    if (id_cliente == id_clientetemp)
                     {
                         row = dt_cliente.NewRow();
                         row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
@@ -187,10 +189,11 @@ namespace Myp_Email.Class
                         row["marca"] = dtequipo.Rows[i]["marca"];
                         row["modelo"] = dtequipo.Rows[i]["modelo"];
                         row["serie"] = dtequipo.Rows[i]["serie"];
+                        row["fecha_vencimiento"] = dtequipo.Rows[i]["fecha_vencimiento"];
                         row["id_cliente"] = dtequipo.Rows[i]["id_cliente"];
                         dt_cliente.Rows.Add(row);
                     }
-                    else
+                    else //Cuando se detecta un cambio de cliente se procesa
                     {
                         for (int j = (i - 1); j >= 0; j--)
                         {
@@ -210,15 +213,39 @@ namespace Myp_Email.Class
                         else {
                             email_cliente = lista_email;                           
                         }
-
-
                         string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, email_cliente, nombre,contacto);
-
                         correo._enviar(dt_cliente, "cliente", lista_email, html);
                         dt_cliente.Clear();
                         i = -1;
                     }
 
+                }
+                igual = i +1;
+                if (dtequipo.Rows.Count == igual) //38 / i=37
+                {
+                    for (int j = i; j >= 0; j--)
+                    {
+                        DataRow rowd = dtequipo.Rows[j];
+                        dtequipo.Rows.Remove(rowd);
+                    }
+                    var cliente = int.Parse(dt_cliente.Rows[0]["id_cliente"].ToString()); //Obtenemos el id del tecnico
+                    DataTable temp = new DataTable();
+                    temp = _select("correo_cliente", cliente.ToString()); // Select el correo del tecnico
+                    string lista_email = _listaemails(temp);
+                    var email_cliente = "";
+                    if (String.IsNullOrEmpty(lista_email))
+                    {
+                        email_cliente = "Sin identificación";
+                        lista_email = contacto;
+                    }
+                    else
+                    {
+                        email_cliente = lista_email;
+                    }
+                    string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, email_cliente, nombre, contacto);
+                    correo._enviar(dt_cliente, "cliente", lista_email, html);
+                    dt_cliente.Clear();
+                    i = -1;
                 }
             }
         }

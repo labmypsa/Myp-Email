@@ -69,7 +69,8 @@ namespace Myp_Email.Class
             "<th >Equipo</th>" +
             "<th >Marca</th>" +
             "<th >Modelo</th>" +
-            "<th >Serie</th>";
+            "<th >Serie</th>"+
+            "<th >Fecha de vencimiento</th>";
             if (tipo != "cliente")
             {
                 contenido += "<th >Cliente</th>" +
@@ -98,13 +99,14 @@ namespace Myp_Email.Class
                  "<td >" + dtequipo.Rows[i]["descripcion"] + "</td>" +
                  "<td >" + dtequipo.Rows[i]["marca"] + "</td>" +
                  "<td >" + dtequipo.Rows[i]["modelo"] + "</td>" +
-                 "<td >" + dtequipo.Rows[i]["serie"] + "</td>";
+                 "<td >" + dtequipo.Rows[i]["serie"] + "</td>"+
+                "<td >" + Convert.ToDateTime(dtequipo.Rows[i]["fecha_vencimiento"]).ToString("yyyy/MM/dd") + " </td>";
 
                 if (tipo != "cliente")
                 {
                     contenido += "<td >" + dtequipo.Rows[i]["cliente"] + "</td>" +
                      "<td >" + dtequipo.Rows[i]["direccion"] + "</td>" +
-                     "<td >" + Convert.ToDateTime(dtequipo.Rows[i]["fecha_inicio"]).ToString("dd/MM/yyyy") + "</td>" +
+                     "<td >" + Convert.ToDateTime(dtequipo.Rows[i]["fecha_inicio"]).ToString("yyyy/MM/dd") + "</td>" +
                      "<td >" + dtequipo.Rows[i]["dias"] + "</td>";
                 }
                 contenido += "</tr>";
@@ -154,7 +156,7 @@ namespace Myp_Email.Class
             oMsg.From = new MailAddress(email, "Mypsa.com.mx");
             if (!String.IsNullOrEmpty(correo))
             {
-                oMsg.To.Add(correo);
+               oMsg.To.Add(correo);
             }          
             oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));
 

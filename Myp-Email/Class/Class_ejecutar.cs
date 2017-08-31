@@ -70,7 +70,7 @@ namespace Myp_Email.Class
                     consulta = "SELECT email FROM view_usuarios where plantas_id=" + int.Parse(suc) + " and (roles_id=10002 || roles_id=10004  || roles_id=10005) and activo='si' "; // Id del cliente
                     break;
                 case "clientes":
-                    consulta = "SELECT id,alias as id_equipo,descripcion,marca,modelo,serie, plantas_id as id_cliente, concat( empresa ,' ',if((planta= 'Planta1' or planta= 'Planta 1'),'',concat(' (',planta,')'))) as cliente, direccion,rfc,fecha_vencimiento as fecha_vencimiento FROM view_informes_" + suc + " where  periodo_calibracion> 0  and  fecha_vencimiento between (curdate()) and (date_add(curdate(), interval 1 month)) and month(fecha_vencimiento)= month(date_add(curdate(), interval 1 month)) and calibraciones_id != 3 order by id_cliente"; // query para calcular todos los equipos vencidos del siguiente mes
+                    consulta = "SELECT id,alias as id_equipo,descripcion,marca,modelo,serie, plantas_id as id_cliente, concat( empresa ,' ',if((planta= 'Planta1' or planta= 'Planta 1'),'',concat(' (',planta,')'))) as cliente, direccion,rfc,fecha_vencimiento as fecha_vencimiento FROM view_informes_" + suc + " where  periodo_calibracion> 0  and  fecha_vencimiento between (curdate()) and (date_add(curdate(), interval 1 month)) and month(fecha_vencimiento)= month(date_add(curdate(), interval 1 month)) and calibraciones_id != 3 order by id_cliente, fecha_vencimiento asc"; // query para calcular todos los equipos vencidos del siguiente mes
                     break;
                 case "correo_calibracion":                    
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
