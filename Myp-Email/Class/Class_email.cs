@@ -60,23 +60,28 @@ namespace Myp_Email.Class
             string contenido = "";
             if (tipo != "cliente") { contenido += "<h1> " + tipo + "</h1> "; }
 
-            contenido += "<table style=\"width:100%;\"><tr>" +
-            "<th style=\"width:5%;\">No.</th>";
+            contenido += "<table><tr>" +
+            "<th>No.</th>";
 
             if (tipo != "cliente") { contenido += "<th >Id</th>"; }
 
-            contenido += "<th style=\"width:18%;\">Id equipo</th>" +
+            contenido += "<th>Id equipo</th>" +
             "<th >Equipo</th>" +
             "<th >Marca</th>" +
             "<th >Modelo</th>" +
-            "<th >Serie</th>"+
-            "<th >Fecha de vencimiento</th>";
+            "<th >Serie</th>";
+
+            if (tipo == "cliente")
+            {
+                contenido += "<th >Fecha de vencimiento</th>";
+            }
+
             if (tipo != "cliente")
             {
                 contenido += "<th >Cliente</th>" +
                 "<th >Dirección</th>" +
                 "<th >Fecha de entrada</th>" +
-                "<th style='width:10px;'>Estancia</th>";
+                "<th >Estancia</th>";
             }
 
             contenido += "</tr>";
@@ -99,8 +104,12 @@ namespace Myp_Email.Class
                  "<td >" + dtequipo.Rows[i]["descripcion"] + "</td>" +
                  "<td >" + dtequipo.Rows[i]["marca"] + "</td>" +
                  "<td >" + dtequipo.Rows[i]["modelo"] + "</td>" +
-                 "<td >" + dtequipo.Rows[i]["serie"] + "</td>"+
-                "<td >" + Convert.ToDateTime(dtequipo.Rows[i]["fecha_vencimiento"]).ToString("yyyy/MM/dd") + " </td>";
+                 "<td style=\"\">" + dtequipo.Rows[i]["serie"] + "</td>";
+
+                if (tipo == "cliente")
+                {
+                    contenido += "<td >" + Convert.ToDateTime(dtequipo.Rows[i]["fecha_vencimiento"]).ToString("yyyy/MM/dd") + " </td>";
+                }               
 
                 if (tipo != "cliente")
                 {
@@ -169,9 +178,9 @@ namespace Myp_Email.Class
                 "<head><style>" +
                 "table { width: 100 %;}" +
                 ".cuadro {border: 1px solid black; border-collapse: collapse; border-radius: 7px; padding: 5px; padding-left: 20px; font-family:verdana;}";
-            if (tipo == "cliente") { html += ".cuadro2 {border: 1px solid black; border-collapse: collapse;  padding: 1px; padding-left: 10px; font-family:verdana; text-align:center; font-size:90%;}"; }
-            else { html += ".cuadro2 {border: 1px solid black; border-collapse: collapse; border-radius: 3px; padding: 1px; padding-left: 10px; font-family:verdana; font-size:10px;}"; }
-            html += "th {width:50%;}" +
+            if (tipo == "cliente") { html += ".cuadro2 {border: 1px solid black; border-collapse: collapse;  padding: 1px; padding: 5px; font-family:verdana; text-align:center; font-size:90%;}"; }
+            else { html += ".cuadro2 {border: 1px solid black; padding: 1px; padding: 5px; font-family:verdana; text-align:center; font-size:60%;}"; }
+            html += ".cuadro th {width:50%;}" +
             "p {font-family:verdana; font-size:100%;}" +
             "</style></head>" +
             "<body>";
