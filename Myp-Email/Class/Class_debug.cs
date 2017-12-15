@@ -61,7 +61,7 @@ namespace Myp_Email.Class
             return dias;
         }
 
-        public void _tecnico(DataTable dtequipo)
+        public void _tecnico(DataTable dtequipo,string sucursal="")
         {
             DataTable dt_tecnico = new DataTable();
             dt_tecnico.Columns.Add("id", typeof(string));
@@ -132,7 +132,7 @@ namespace Myp_Email.Class
                         DataTable temp = new DataTable();
                         temp = _select("correo_tec", id_usuario.ToString()); // Select el correo del tecnico
                         var correo_tec = temp.Rows[0]["email"].ToString();
-                        correo._enviar(dt_tecnico, nom_tecnico, correo_tec);
+                        correo._enviar(dt_tecnico, nom_tecnico, correo_tec,"",sucursal);
                         dt_tecnico.Clear();
                         i = -1;
                     }
@@ -149,14 +149,14 @@ namespace Myp_Email.Class
                     DataTable temp = new DataTable();
                     temp = _select("correo_tec", id_usuario.ToString()); // Select el correo del tecnico
                     var correo_tec = temp.Rows[0]["email"].ToString();
-                    correo._enviar(dt_tecnico, nom_tecnico, correo_tec);
+                    correo._enviar(dt_tecnico, nom_tecnico, correo_tec,"",sucursal);
                     dt_tecnico.Clear();
                     i = -1;
                 }
             }
         }
 
-        public void _clientes(DataTable dtequipo, int suc = 0)
+        public DataTable _clientes(DataTable dtequipo, int suc = 0)
         {
             DataTable dt_cliente = new DataTable();
             dt_cliente.Columns.Add("id_equipo", typeof(string));
@@ -165,15 +165,34 @@ namespace Myp_Email.Class
             dt_cliente.Columns.Add("modelo", typeof(string));
             dt_cliente.Columns.Add("serie", typeof(string));
             dt_cliente.Columns.Add("fecha_vencimiento", typeof(string));
-            dt_cliente.Columns.Add("id_cliente", typeof(string));
+            dt_cliente.Columns.Add("id_cliente", typeof(string));          
+
+            DataTable dt_repor_cliente = new DataTable();           
+            dt_repor_cliente.Columns.Add("cliente", typeof(string));
+            dt_repor_cliente.Columns.Add("contactos", typeof(string));
+            dt_repor_cliente.Columns.Add("total", typeof(string));
+            dt_repor_cliente.Columns.Add("enviado", typeof(string));
+            dt_repor_cliente.Columns.Add("fecha", typeof(string)); 
+            
             DataRow row;
-           
+
+            dt_cliente.Clear();
+            dt_repor_cliente.Clear();
+
             //int filas = dtequipo.Rows.Count;
             int i;            
             DataTable dt_email = new DataTable();
             dt_email = _ejecutar(_querys("correo_cotizacion", suc.ToString()), "2"); //obtengo el query, deespues el dt
-            nombre = dt_email.Rows[0]["nombre"].ToString();
-            contacto = dt_email.Rows[0]["email"].ToString();
+            if (dt_email.Rows.Count > 0)
+            {
+                nombre = dt_email.Rows[0]["nombre"].ToString();
+                contacto = dt_email.Rows[0]["email"].ToString();
+            }
+            else {
+                nombre = "";
+                contacto = "";
+            }
+           
 
             for (i = 0; i < dtequipo.Rows.Count; i++)
             {
@@ -184,6 +203,7 @@ namespace Myp_Email.Class
                     nom_cliente = dtequipo.Rows[i]["cliente"].ToString();
                     dir_cliente = dtequipo.Rows[i]["direccion"].ToString();
                     rfc_cliente = dtequipo.Rows[i]["rfc"].ToString();
+
                     row = dt_cliente.NewRow();
                     row["id_equipo"] = dtequipo.Rows[i]["id_equipo"];
                     row["descripcion"] = dtequipo.Rows[i]["descripcion"];
@@ -230,7 +250,16 @@ namespace Myp_Email.Class
                             email_cliente = lista_email;                           
                         }
                         string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, email_cliente, nombre,contacto);
-                        correo._enviar(dt_cliente, "cliente", lista_email, html);
+                        var confirmacion = correo._enviar(dt_cliente, "cliente", lista_email, html);
+                        //Inicio de
+                        row = dt_repor_cliente.NewRow();
+                        row["cliente"] = nom_cliente;
+                        row["contactos"] = email_cliente;
+                        row["total"] = dt_cliente.Rows.Count;
+                        row["enviado"] = confirmacion;
+                        row["fecha"] = DateTime.Now.ToString();
+                        dt_repor_cliente.Rows.Add(row);
+                        // Fin de 
                         dt_cliente.Clear();
                         i = -1;
                     }
@@ -238,11 +267,11 @@ namespace Myp_Email.Class
                 }
                 igual = i +1;
                 if (dtequipo.Rows.Count == igual) //38 / i=37
-                {
+                {                   
                     for (int j = i; j >= 0; j--)
                     {
                         DataRow rowd = dtequipo.Rows[j];
-                        dtequipo.Rows.Remove(rowd);
+                        dtequipo.Rows.Remove(rowd);                    
                     }
                     var cliente = int.Parse(dt_cliente.Rows[0]["id_cliente"].ToString()); //Obtenemos el id del tecnico
                     DataTable temp = new DataTable();
@@ -259,11 +288,21 @@ namespace Myp_Email.Class
                         email_cliente = lista_email;
                     }
                     string html = correo._infocliente(nom_cliente, dir_cliente, rfc_cliente, email_cliente, nombre, contacto);
-                    correo._enviar(dt_cliente, "cliente", lista_email, html);
+                    var confirmacion= correo._enviar(dt_cliente, "cliente", lista_email, html);
+                    //Inicio de
+                    row = dt_repor_cliente.NewRow();
+                    row["cliente"] = nom_cliente;
+                    row["contactos"] = email_cliente;
+                    row["total"] = dt_cliente.Rows.Count;
+                    row["enviado"] = confirmacion;
+                    row["fecha"] = DateTime.Now.ToString();
+                    dt_repor_cliente.Rows.Add(row);
+                    // Fin de 
                     dt_cliente.Clear();
                     i = -1;
                 }
             }
+            return dt_repor_cliente;
         }
 
         public string _listaemails(DataTable dt)
@@ -276,6 +315,8 @@ namespace Myp_Email.Class
             if (contactos.Length > 0) { contactos = contactos.Substring(0, (contactos.Length) - 2); }            
             return contactos;
         }
+
+
     }
 
 

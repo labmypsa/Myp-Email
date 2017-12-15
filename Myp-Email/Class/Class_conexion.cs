@@ -9,7 +9,7 @@ namespace Myp_Email.Class
 {
     public class Class_conexion
     {
-        private string servidor = "192.232.243.186";
+        private string servidor = "192.232.243.185";
         private string puerto = "3306";
         private string usuario = "mypsa_app2";
         private string pass = "TL5ZU9J4H2WV";

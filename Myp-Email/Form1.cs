@@ -15,17 +15,14 @@ namespace Myp_Email
 {
     public partial class Form1 : Form
     {
-        DataTable dt = new DataTable();       
+        DataTable dt = new DataTable();
         Class.Class_debug her_depurar_ejecutar = new Class.Class_debug();
         Class.Class_email correo = new Class.Class_email();
 
-        //string[] lista_email = {
-        //    "mvega@mypsa.com.mx, drodriguez@mypsa.mx, afreyde@mypsa.mx",
-        //    "hmofacturacion@mypsa.com.mx, lromero@mypsa.com.mx, svazquez@mypsa.mx, blanca.bernal@mypsa.mx",
-        //    "edit.bray@mypsa.com.mx"
-        //};
+
         string horainicial = "08:15:00";
         string[] ArrSucur = { "n", "h", "g" };
+        string[] ArrNomSucur = { "Nogales", "Hermosillo", "Guaymas" };
         int count_consola = 0;
         string horainicial2 = "07:35";
 
@@ -56,9 +53,9 @@ namespace Myp_Email
                         try
                         {
                             DataTable dt_copy = new DataTable();
-                            dt = her_depurar_ejecutar._editar(her_depurar_ejecutar._select("calibracion", ArrSucur[i]));                            
+                            dt = her_depurar_ejecutar._editar(her_depurar_ejecutar._select("calibracion", ArrSucur[i]));
                             dt_copy = dt.Copy();
-                            her_depurar_ejecutar._tecnico(dt_copy);
+                            her_depurar_ejecutar._tecnico(dt_copy, ArrNomSucur[i]);
                             _consola("Operación terminada exitosamente. Proceso : Calibración por técnico , Sucursal: " + ArrSucur[i]);
                             her_depurar_ejecutar._add("logs", "'calibración Técnico', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
@@ -73,12 +70,20 @@ namespace Myp_Email
                         _consola("Iniciando envio de correo Proceso : Recordatorios para Clientes , Sucursal: " + ArrSucur[i]);
                         try
                         {
+                            DataTable dt_tempreport = new DataTable();
                             DataTable dt_copy = new DataTable();
                             dt = her_depurar_ejecutar._select(proceso, ArrSucur[i]);
                             dt_copy = dt.Copy();
-                            her_depurar_ejecutar._clientes(dt_copy, y);
+                            dt_tempreport = her_depurar_ejecutar._clientes(dt_copy, y);
+                            // Enviar reporte, REvisar                            
+                                DataTable dt_email = new DataTable();
+                                dt_email = her_depurar_ejecutar._ejecutar(her_depurar_ejecutar._querys("correo_reporte", y.ToString()), "2"); //obtengo el query, deespues el dt
+                                string listaemail = her_depurar_ejecutar._listaemails(dt_email); // Obtengo la lista de correos
+                                correo._enviar(dt_tempreport, "reporte", listaemail,"", ArrNomSucur[i]);
+                            // Fin
                             _consola("Operación terminada exitosamente. Proceso : Recordatorios para Clientes, Sucursal: " + ArrSucur[i]);
                             her_depurar_ejecutar._add("logs", "'clientes', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
+
                         }
                         catch (Exception)
                         {
@@ -95,11 +100,11 @@ namespace Myp_Email
                             dt = her_depurar_ejecutar._editar(her_depurar_ejecutar._select(proceso, ArrSucur[i]));
                             dt_copy = dt.Copy();
                             DataTable dt_email = new DataTable();
-                            dt_email= her_depurar_ejecutar._ejecutar(her_depurar_ejecutar._querys("correo_" + proceso, y.ToString()), "2"); //obtengo el query, deespues el dt
+                            dt_email = her_depurar_ejecutar._ejecutar(her_depurar_ejecutar._querys("correo_" + proceso, y.ToString()), "2"); //obtengo el query, deespues el dt
                             string listaemail = her_depurar_ejecutar._listaemails(dt_email); // Obtengo la lista de correos
-                            correo._enviar(dt_copy, desc, listaemail); 
-                            _consola("Operación terminada exitosamente. Proceso : " + proceso + ", Sucursal: " + ArrSucur[i]);
-                            her_depurar_ejecutar._add("logs", "'" + proceso + "', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
+                            correo._enviar(dt_copy, desc, listaemail, "",ArrNomSucur[i]);
+                            //_consola("Operación terminada exitosamente. Proceso : " + proceso + ", Sucursal: " + ArrSucur[i]);
+                           // her_depurar_ejecutar._add("logs", "'" + proceso + "', 'Operación terminada exitosamente. Sucursal: " + ArrSucur[i] + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "'");
                         }
                         catch (Exception)
                         {
@@ -254,6 +259,13 @@ namespace Myp_Email
         {
             Form3 View3 = new Form3();
             View3.Show();
+        }
+
+        private void reporteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 View2 = new Form2();
+            View2._gridview("correo_reporte");
+            View2.Show();
         }
     }
 }

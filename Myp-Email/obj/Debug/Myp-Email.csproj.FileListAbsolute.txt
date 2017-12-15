@@ -11,3 +11,7 @@ c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-E
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form1.resources
 C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form2.resources
 C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form3.resources
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe.manifest
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.application
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.exe.manifest
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.application

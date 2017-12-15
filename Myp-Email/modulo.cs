@@ -82,6 +82,7 @@ namespace Myp_Email
                     MessageBox.Show("Error de operación!");
                 }
             }
+            else
             {
                 MessageBox.Show("Campos vacios!");
             }

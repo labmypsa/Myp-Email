@@ -55,6 +55,7 @@
             this.check_n = new System.Windows.Forms.CheckBox();
             this.consola = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.reporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_radio.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -133,6 +134,7 @@
             this.salidaToolStripMenuItem1,
             this.facturaciónToolStripMenuItem,
             this.cotizaciónToolStripMenuItem,
+            this.reporteToolStripMenuItem,
             this.logsToolStripMenuItem});
             this.modulosToolStripMenuItem.Name = "modulosToolStripMenuItem";
             this.modulosToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
@@ -282,6 +284,13 @@
             this.panel1.Size = new System.Drawing.Size(119, 61);
             this.panel1.TabIndex = 4;
             // 
+            // reporteToolStripMenuItem
+            // 
+            this.reporteToolStripMenuItem.Name = "reporteToolStripMenuItem";
+            this.reporteToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.reporteToolStripMenuItem.Text = "Correo_Reporte";
+            this.reporteToolStripMenuItem.Click += new System.EventHandler(this.reporteToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,6 +344,7 @@
         private System.Windows.Forms.ToolStripMenuItem facturaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cotizaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reporteToolStripMenuItem;
     }
 }
 

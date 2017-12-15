@@ -84,6 +84,9 @@ namespace Myp_Email.Class
                 case "correo_cotizacion":                    
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
                     break;
+                case "correo_reporte":
+                    consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
+                    break;
                 default:
                     break;
 
