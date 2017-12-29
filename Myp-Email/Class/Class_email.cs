@@ -70,11 +70,11 @@ namespace Myp_Email.Class
                        "<td>" + tipo + " </td> " +
                        "<td> " + sucursal + " </td> " +
                    "</tr> " +
-                  "</table> ";                   
+                  "</table> ";
             }
 
 
-            contenido += "<p style =\"text-align: left; font-family: Times, Times New Roman, Georgia, serif; font-size: 20px; color: #333634;\">Total :  " + dtequipo.Rows.Count +"</p>";
+            contenido += "<p style =\"text-align: left; font-family: Times, Times New Roman, Georgia, serif; font-size: 20px; color: #333634;\">Total :  " + dtequipo.Rows.Count + "</p>";
 
 
             contenido += "<table id=\"t03\"><tr>" +
@@ -224,6 +224,7 @@ namespace Myp_Email.Class
             {
                 oMsg.To.Add(correo);
             }
+
             oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));
 
             var subject = "Recordatorio de calibración";
@@ -255,8 +256,44 @@ namespace Myp_Email.Class
                 html += info_cliente;
                 html += _procesos(dtequipo, tipo);
             }
-            html += "</body></html>";      
+            html += "</body></html>";
             oMsg.Body = html;
+            try
+            {
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com"))
+                {
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.Credentials = new System.Net.NetworkCredential("laboratoriomypsa@gmail.com", "*MyP2015*");
+                    smtp.Send(oMsg);
+                }
+                return "Si";
+            }
+            catch (Exception)
+            {
+                return "No";
+            }
+
+        }
+
+        public string _enviartemp(string asunto = "", string correo = "", string body = "", bool htmlbody = false)
+        {
+            //Creamos un nuevo Objeto de Mensaje
+            MailMessage oMsg = new MailMessage();
+            var email = "laboratoriomypsa@gmail.com";
+            //Desde (correo electronico del que enviamos)
+            oMsg.From = new MailAddress(email, "Mypsa.com.mx");
+            oMsg.To.Add("test@mypsa.com.mx");            
+            if (!String.IsNullOrEmpty(correo))
+            {
+                oMsg.Bcc.Add(correo);
+            }
+            //oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));            
+            oMsg.Subject = asunto;
+            // Add HTML and text body
+            oMsg.IsBodyHtml = htmlbody;
+
+            oMsg.Body = body;
             try
             {
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com"))

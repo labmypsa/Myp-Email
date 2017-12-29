@@ -2,16 +2,26 @@ c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-E
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Img.resources
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Properties.Resources.resources
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.csproj.GenerateResource.Cache
-c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe.config
-c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe
-c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.pdb
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\MySql.Data.dll
-c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.exe
-c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.pdb
 c:\users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form1.resources
 C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form2.resources
 C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp_Email.Form3.resources
-C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.exe.manifest
-C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email.application
-C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.exe.manifest
-C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email.application
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Shared.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Win.Misc.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Win.UltraWinEditors.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Win.UltraWinListView.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Win.UltraWinSpellChecker.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Infragistics4.Win.v17.2.xml
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\MetroFramework.Design.dll
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\MetroFramework.dll
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email 1.0.5.exe.config
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email 1.0.5.exe.manifest
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email 1.0.5.application
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email 1.0.5.exe
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\bin\Debug\Myp-Email 1.0.5.pdb
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email 1.0.5.exe.licenses
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email 1.0.5.exe.manifest
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email 1.0.5.application
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email 1.0.5.exe
+C:\Users\otoniel.hernandez\documents\visual studio 2017\Projects\Myp-Email\Myp-Email\obj\Debug\Myp-Email 1.0.5.pdb

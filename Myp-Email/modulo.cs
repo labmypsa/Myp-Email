@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetroFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,38 +8,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MetroFramework.Components;
 
 namespace Myp_Email
 {
-    public partial class Form2 : Form
+    public partial class Form2 : MetroFramework.Forms.MetroForm
     {
         Class.Class_ejecutar ejecutar = new Class.Class_ejecutar();
 
         int id_contacto = 0;
+        string table = "";       
+
         public Form2(string tipo = "")
         {
-            InitializeComponent();
+            InitializeComponent();            
+            this.Text = tipo;
             MaximizeBox = false;
             _combobox();
-            this.button_editar.Enabled = false;
-            this.button_delete.Enabled = false;
-            this.button_add.Enabled = true;
+            this.metroButton2.Enabled = false;
+            this.metroButton3.Enabled = false;
+            this.metroButton1.Enabled = true;
         }
 
         public void _gridview(string tipo = "")
         {
-            this.Text = tipo;
-
+            table = tipo;
             DataTable dt = new DataTable();
             DataTable dt_copy = new DataTable(); //Copia el contenido, porque cuando combobox entra a pedir otra vez al metodo se genera otro datatable. y el gridview esta alimentado con el datatable directamente
-            dt = ejecutar._ejecutar("select id,nombre as Nombre,email,sucursal as Planta,id_sucursal from view_" + this.Text + ";", "2");
+            dt = ejecutar._ejecutar("select id,nombre as Nombre,email,sucursal as Planta,id_sucursal from view_" + table + ";", "2");
             dt_copy = dt.Copy();
-            tabla.DataSource = dt_copy;
-            tabla.Columns[0].Visible = false;
-            tabla.Columns[1].Width = 110;
-            tabla.Columns[2].Width = 150;
-            tabla.Columns[3].Width = 80;
-            tabla.Columns[4].Visible = false;
+            //tabla.DataSource = dt_copy;
+            metroGridmodulo.DataSource = dt_copy;
+            metroGridmodulo.Columns[0].Visible = false;
+            metroGridmodulo.Columns[1].Width = 110;
+            metroGridmodulo.Columns[2].Width = 150;
+            metroGridmodulo.Columns[3].Width = 80;
+            metroGridmodulo.Columns[4].Visible = false;
         }
 
         public void _combobox()
@@ -47,126 +52,18 @@ namespace Myp_Email
             DataTable dt_copy = new DataTable();
             dt = ejecutar._ejecutar("select id,nombre from sucursal;", "2");
             dt_copy = dt.Copy();
-            comboBox_sucursal.DataSource = dt_copy;
-            comboBox_sucursal.DisplayMember = "nombre";
-            comboBox_sucursal.ValueMember = "id";
-        }
-
-        private void button_add_Click(object sender, EventArgs e)
-        {
-            string tipo = this.Text;
-            if (_validar() == true)
-            {
-                string values = String.Format("'{0}','{1}','{2}'", this.text_name.Text, this.text_correo.Text, this.comboBox_sucursal.SelectedValue);
-                try
-                {
-
-                    if (duplicado("select count(correo) as count from " + this.Text + " where correo='" + this.text_correo.Text + "';") == 0)
-                    {
-                        ejecutar._add(tipo, values);
-                        MessageBox.Show("Se agrego Exitosamente!");
-                        _gridview(tipo);
-                        this.text_name.Text = "";
-                        this.text_correo.Text = "";
-                        this.button_editar.Enabled = false;
-                        this.button_delete.Enabled = false;
-                    }
-                    else
-                    {
-                        this.text_correo.Focus();
-                        MessageBox.Show("Correo duplicado!");
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error de operación!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Campos vacios!");
-            }
-
-        }
-
-        private void button_editar_Click(object sender, EventArgs e)
-        {
-            string tipo = this.Text;
-            if (_validar() == true)
-            {
-                string values = String.Format(" nombre='{0}', correo='{1}', id_sucursal='{2}' where id='{3}'", this.text_name.Text, this.text_correo.Text, this.comboBox_sucursal.SelectedValue, id_contacto);
-                try
-                {
-                    if (duplicado("select count(correo) as count from " + this.Text + " where correo='" + this.text_correo.Text + "' and id !="+id_contacto+";") == 0)
-                    {
-                        ejecutar._update(tipo, values);
-                        MessageBox.Show("Se edito Exitosamente!");
-                        _gridview(tipo);
-                        this.text_name.Text = "";
-                        this.text_correo.Text = "";
-                        this.button_editar.Enabled = false;
-                        this.button_delete.Enabled = false;
-                    }
-                    else
-                    {
-                        this.text_correo.Focus();
-                        MessageBox.Show("Correo duplicado!");
-                    }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error de operación!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Campos vacios!");
-            }
-        }
-
-        private void button_delete_Click(object sender, EventArgs e)
-        {
-            string tipo = this.Text;
-            string values = String.Format("id='{0}'", id_contacto);
-            try
-            {
-                ejecutar._delete(tipo, values);
-                MessageBox.Show("Se elimino Exitosamente!");
-                _gridview(tipo);               
-                this.text_name.Text = "";
-                this.text_correo.Text = "";
-                this.button_editar.Enabled = false;
-                this.button_delete.Enabled = false;
-                this.button_add.Enabled = true;
-                this.text_name.Focus();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Error de operación!");
-            }
-        }
-
-        private void tabla_DoubleClick(object sender, EventArgs e)
-        {
-            if (tabla.CurrentRow.Index != -1)
-            {
-                id_contacto = int.Parse(tabla.CurrentRow.Cells[0].Value.ToString());
-                this.text_name.Text = tabla.CurrentRow.Cells[1].Value.ToString();
-                this.text_correo.Text = tabla.CurrentRow.Cells[2].Value.ToString();
-                this.comboBox_sucursal.SelectedIndex = int.Parse(tabla.CurrentRow.Cells[4].Value.ToString()) - 1;
-
-                this.button_editar.Enabled = true;
-                this.button_delete.Enabled = true;
-            }
-        }
+            metroComboBox1.DataSource = dt_copy;
+            metroComboBox1.DisplayMember = "nombre";
+            metroComboBox1.ValueMember = "id";
+        }        
 
         private Boolean _validar()
         {
             var result = true;
-            if (String.IsNullOrEmpty(this.text_name.Text) == true && String.IsNullOrEmpty(this.text_correo.Text) == true)
+            if (String.IsNullOrEmpty(this.metroTextBox1.Text) == true && String.IsNullOrEmpty(this.metroTextBox2.Text) == true)
             {
                 result = false;
-                this.text_name.Focus();
+                this.metroTextBox1.Focus();
             }
             return result;
         }
@@ -178,6 +75,113 @@ namespace Myp_Email
             int count = int.Parse(dt.Rows[0]["count"].ToString());
             return count;
 
+        }
+
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            string tipo = table;
+            if (_validar() == true)
+            {
+                string values = String.Format("'{0}','{1}','{2}'", this.metroTextBox1.Text, this.metroTextBox2.Text, this.metroComboBox1.SelectedValue);
+                try
+                {
+
+                    if (duplicado("select count(correo) as count from " + tipo + " where correo='" + this.metroTextBox2.Text + "';") == 0)
+                    {
+                        ejecutar._add(tipo, values);                        
+                        MetroMessageBox.Show(this, "Se agrego Exitosamente!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                        _gridview(tipo);
+                        this.metroTextBox1.Text = "";
+                        this.metroTextBox2.Text = "";
+                        this.metroButton2.Enabled = false;
+                        this.metroButton3.Enabled = false;
+                    }
+                    else
+                    {
+                        this.metroTextBox2.Focus();
+                        MetroMessageBox.Show(this, "Correo duplicado!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Warning);                      
+                    }
+                }
+                catch (Exception)
+                {
+                    MetroMessageBox.Show(this, "Error de operación!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);                    
+                }
+            }
+            else
+            {
+                MetroMessageBox.Show(this, "Error de operación!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);                               
+            }
+        }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            string tipo = table;
+            if (_validar() == true)
+            {
+                string values = String.Format(" nombre='{0}', correo='{1}', id_sucursal='{2}' where id='{3}'", this.metroTextBox1.Text, this.metroTextBox2.Text, this.metroComboBox1.SelectedValue, id_contacto);
+                try
+                {
+                    if (duplicado("select count(correo) as count from " + tipo + " where correo='" + this.metroTextBox2.Text + "' and id !=" + id_contacto + ";") == 0)
+                    {
+                        ejecutar._update(tipo, values);
+                        MetroMessageBox.Show(this, "Se edito Exitosamente!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Question);                        
+                        _gridview(tipo);
+                        this.metroTextBox1.Text = "";
+                        this.metroTextBox2.Text = "";
+                        this.metroButton2.Enabled = false;
+                        this.metroButton3.Enabled = false;
+                    }
+                    else
+                    {
+                        this.metroTextBox2.Focus();
+                        MetroMessageBox.Show(this, "Correo duplicado!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Warning);                        
+                    }
+                }
+                catch (Exception)
+                {
+                    MetroMessageBox.Show(this, "Error de operación!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MetroMessageBox.Show(this, "Error de operación!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+            }
+        }
+
+        private void metroButton3_Click(object sender, EventArgs e)
+        {
+            string tipo = table;
+            string values = String.Format("id='{0}'", id_contacto);
+            try
+            {
+                ejecutar._delete(tipo, values);                
+                MetroMessageBox.Show(this, "Se elimino Exitosamente!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Question);                
+                _gridview(tipo);
+                this.metroTextBox1.Text = "";
+                this.metroTextBox2.Text = "";
+                this.metroButton2.Enabled = false;
+                this.metroButton3.Enabled = false;
+                this.metroButton1.Enabled = true;
+                this.metroTextBox1.Focus();
+            }
+            catch (Exception)
+            {
+                MetroMessageBox.Show(this, "Error de operación!", "Mensaje de notificación", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+            }
+        }
+
+        private void metroGridmodulo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (metroGridmodulo.CurrentRow.Index != -1)
+            {
+                id_contacto = int.Parse(metroGridmodulo.CurrentRow.Cells[0].Value.ToString());
+                this.metroTextBox1.Text = metroGridmodulo.CurrentRow.Cells[1].Value.ToString();
+                this.metroTextBox2.Text = metroGridmodulo.CurrentRow.Cells[2].Value.ToString();
+                this.metroComboBox1.SelectedIndex = int.Parse(metroGridmodulo.CurrentRow.Cells[4].Value.ToString()) - 1;
+
+                this.metroButton2.Enabled = true;
+                this.metroButton3.Enabled = true;
+            }
         }
     }
 }
