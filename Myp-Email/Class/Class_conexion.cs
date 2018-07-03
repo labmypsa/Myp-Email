@@ -35,8 +35,7 @@ namespace Myp_Email.Class
                 "Allow Zero Datetime=false; Convert Zero Datetime=true", this.servidor, this.puerto, this.usuario, this.pass, db);
 
             return strConexion;
-        }
-
+        }       
 
     }
 }

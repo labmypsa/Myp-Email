@@ -20,13 +20,15 @@ namespace Myp_Email.Class
 
         }
 
-        private string _mes(DateTime hoy)
+        private string _mes(string fecha)
         {
-            string[] meses_array = new string[] { "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" };
+            DateTime date = DateTime.Parse(fecha);
+
+            string[] meses_array = new string[] { "","ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE" };
             var mes = "";
-            if (hoy.Month + 1 < 13) // un año nuevo           
+            if (date.Month + 1 < 13) // un año nuevo           
             {
-                mes = meses_array[hoy.Month];
+                mes = meses_array[date.Month];
             }
             else
             {
@@ -59,7 +61,7 @@ namespace Myp_Email.Class
         {
             string contenido = "";
 
-            if (tipo != "cliente")
+            if (tipo.ToLower() != "cliente")
             {
                 contenido += " <table id=\"t02\" >" +
                    "<tr>" +
@@ -80,7 +82,7 @@ namespace Myp_Email.Class
             contenido += "<table id=\"t03\"><tr>" +
                           "<th> # </th>";
 
-            if (tipo == "reporte")
+            if (tipo.ToLower() == "reporte")
             {
                 contenido += "<th>Cliente (Empresa / Planta)</th>" +
                 "<th >Contacto (s)</th>" +
@@ -179,7 +181,7 @@ namespace Myp_Email.Class
             return contenido;
         }
 
-        public string _infocliente(string cliente = "", string dir = "", string rfc = "", string correo = "", string nombre = "", string contacto = "")
+        public string _infocliente(string cliente = "", string dir = "", string rfc = "", string correo = "", string nombre = "", string contacto = "",string fecharecord="")
         {
 
 
@@ -202,8 +204,8 @@ namespace Myp_Email.Class
                         "<p> <strong> Contacto(s):</strong> " + correo + "</p>" +
                     "</td>" +
                         "<td><p> <strong>Contacto: " + nombre + "</strong> </p>" +
-                        "<p> <strong>Fecha:</strong> " + DateTime.Now + "</p>" +
-                        "<p> <strong>Asunto:</strong> Recordatorio " + _mes(DateTime.Now) + " </p>" +
+                        "<p> De acuerdo a nuestros registros, la calibración del equipo listado a continuación vencerá "+
+                        "el próximo mes de <strong> "+ _mes(fecharecord) + "</strong>  del   <strong>" + DateTime.Now.Year.ToString() + "</strong>. </p>" +
                         "<p> <strong>Nota:</strong> Este correo se envía de manera automática, favor de responder a la dirección de correo siguiente: <br> <a>" + contacto + " </a> </p>" +
                     "</td>" +
                    "</tr>" +
@@ -218,14 +220,18 @@ namespace Myp_Email.Class
             var email = "laboratoriomypsa@gmail.com";
             //Desde (correo electronico del que enviamos)
             oMsg.From = new MailAddress(email, "Mypsa.com.mx");
-            //oMsg.To.Add("test@mypsa.com.mx");
+            //oMsg.To.Add("sistemas@mypsa.com.mx");
 
             if (!String.IsNullOrEmpty(correo))
             {
-                oMsg.To.Add(correo);
+               oMsg.To.Add(correo);
             }
+            //oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx"));
 
-            oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));
+            if (tipo=="cliente" && sucursal=="2")
+            {
+              oMsg.Bcc.Add(new MailAddress("lromero@mypsa.com.mx"));
+            }
 
             var subject = "Recordatorio de calibración";
             oMsg.Subject = subject;
@@ -276,7 +282,7 @@ namespace Myp_Email.Class
 
         }
 
-        public string _enviartemp(string asunto = "", string correo = "", string body = "", bool htmlbody = false)
+        public string _enviartemp(string asunto = "", string correo = "", string body = "", bool htmlbody = false) //Template
         {
             //Creamos un nuevo Objeto de Mensaje
             MailMessage oMsg = new MailMessage();
@@ -288,7 +294,7 @@ namespace Myp_Email.Class
             {
                 oMsg.Bcc.Add(correo);
             }
-            //oMsg.Bcc.Add(new MailAddress("test@mypsa.com.mx", "Copia " + tipo));            
+            oMsg.Bcc.Add(new MailAddress("sistemas@mypsa.com.mx", "Copia "));            
             oMsg.Subject = asunto;
             // Add HTML and text body
             oMsg.IsBodyHtml = htmlbody;

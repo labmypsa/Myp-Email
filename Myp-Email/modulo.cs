@@ -177,6 +177,7 @@ namespace Myp_Email
                 id_contacto = int.Parse(metroGridmodulo.CurrentRow.Cells[0].Value.ToString());
                 this.metroTextBox1.Text = metroGridmodulo.CurrentRow.Cells[1].Value.ToString();
                 this.metroTextBox2.Text = metroGridmodulo.CurrentRow.Cells[2].Value.ToString();
+
                 this.metroComboBox1.SelectedIndex = int.Parse(metroGridmodulo.CurrentRow.Cells[4].Value.ToString()) - 1;
 
                 this.metroButton2.Enabled = true;

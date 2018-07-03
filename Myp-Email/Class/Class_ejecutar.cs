@@ -34,12 +34,12 @@ namespace Myp_Email.Class
             return dtequipos;
         }
 
-        public DataTable _select(string proc = "", string suc = "")
+        public DataTable _select(string proc = "", string suc = "", string fecha = "")
         {
             DataTable dt = new DataTable();
             try
             {
-                string strQuery = _querys(proc, suc);
+                string strQuery = _querys(proc, suc, fecha);
                 dt = _ejecutar(strQuery);
                 return dt;
             }
@@ -49,7 +49,7 @@ namespace Myp_Email.Class
             }
         }
 
-        public string _querys(string opcion = "", string suc = "")
+        public string _querys(string opcion = "", string suc = "", string fecha = "")
         {
             string consulta = "";
             switch (opcion)
@@ -64,24 +64,24 @@ namespace Myp_Email.Class
                     consulta = "SELECT id,alias as id_equipo,descripcion,marca,modelo,serie, concat( empresa ,' ',if((planta= 'Planta1' or planta= 'Planta 1'),'',concat(' (',planta,')'))) as Cliente, direccion,fecha_hoja_entrada as fecha_inicio  FROM view_informes_" + suc + " where proceso= 3 and fecha_hoja_entrada is not null order by id desc";
                     break;
                 case "correo_tec":
-                    consulta = "SELECT email FROM view_usuarios where id=" + int.Parse(suc) + ""; // Id del técnico
+                    consulta = "SELECT email FROM view_usuarios where id=" + int.Parse(suc) + " and activo='si'"; // Id del técnico
                     break;
                 case "correo_cliente":
-                    consulta = "SELECT email FROM view_usuarios where plantas_id=" + int.Parse(suc) + " and (roles_id=10002 || roles_id=10004  || roles_id=10005) and activo='si' "; // Id del cliente
+                    consulta = "SELECT email FROM view_usuarios where plantas_id=" + int.Parse(suc) + " and (roles_id=10002 || roles_id=10004  || roles_id=10005) and activo='si' and email not like '%cliente%' "; // Id del cliente
                     break;
-                case "clientes":
-                    consulta = "SELECT id,alias as id_equipo,descripcion,marca,modelo,serie, plantas_id as id_cliente, concat( empresa ,' ',if((planta= 'Planta1' or planta= 'Planta 1'),'',concat(' (',planta,')'))) as cliente, direccion,rfc,fecha_vencimiento as fecha_vencimiento FROM view_informes_" + suc + " where  periodo_calibracion> 0  and  fecha_vencimiento between (curdate()) and (date_add(curdate(), interval 1 month)) and month(fecha_vencimiento)= month(date_add(curdate(), interval 1 month)) and calibraciones_id != 3 order by id_cliente, fecha_vencimiento asc"; // query para calcular todos los equipos vencidos del siguiente mes
+                case "clientes":                   
+                    consulta = "SELECT id,alias as id_equipo,descripcion,marca,modelo,serie, plantas_id as id_cliente, concat( empresa ,' ',if((planta= 'Planta1' or planta= 'Planta 1'),'',concat(' (',planta,')'))) as cliente, direccion,rfc,fecha_vencimiento as fecha_vencimiento FROM view_informes_" + suc + " where  periodo_calibracion> 0  and  fecha_vencimiento between ('" + fecha + "') and (date_add('" + fecha + "', interval 1 month)) and month(fecha_vencimiento)= month(date_add('" + fecha + "', interval 1 month)) and calibraciones_id != 3 and plantas_id is not null order by id_cliente, fecha_vencimiento asc"; // query para calcular todos los equipos vencidos del siguiente mes                                    
                     break;
-                case "correo_calibracion":                    
+                case "correo_calibracion":
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
                     break;
-                case "correo_salida":                  
+                case "correo_salida":
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
                     break;
-                case "correo_facturacion":                   
+                case "correo_facturacion":
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
                     break;
-                case "correo_cotizacion":                    
+                case "correo_cotizacion":
                     consulta = "SELECT * FROM view_" + opcion + " where id_sucursal=" + int.Parse(suc);
                     break;
                 case "correo_reporte":
@@ -99,7 +99,7 @@ namespace Myp_Email.Class
             try
             {
                 string celdas = "";
-                if (tabla == "logs") { celdas = "accion,detalle,fecha"; }
+                if (tabla == "registro") { celdas = "idoperacion,idsucursal,estado,detalle"; }
                 else { celdas = "nombre,correo,id_sucursal"; }
 
                 string consulta = "insert into " + tabla + "(" + celdas + ") VALUES (" + values + ");";
